@@ -137,7 +137,8 @@ export const useStore = create<AppState>((set, get) => ({
     if (!user) throw new Error('Not authenticated');
     
     try {
-      const response = await fetch('http://localhost:5000/api/billing/create-subscription', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/billing/create-subscription`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -161,7 +162,8 @@ export const useStore = create<AppState>((set, get) => ({
     if (!user) return false;
     
     try {
-      const response = await fetch('http://localhost:5000/api/billing/verify-payment', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+      const response = await fetch(`${apiUrl}/api/billing/verify-payment`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

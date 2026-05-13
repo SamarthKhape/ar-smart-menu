@@ -33,6 +33,20 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
+function SubscriptionGuard({ children }: { children: React.ReactNode }) {
+  const { subscription, isLoading } = useStore();
+  
+  if (isLoading) return null;
+
+  const isActive = subscription && (subscription.status === 'active' || subscription.status === 'trialing');
+  
+  if (!isActive) {
+    return <Navigate to="/dashboard/pricing" replace />;
+  }
+  
+  return <>{children}</>;
+}
+
 function App() {
   const initialize = useStore(state => state.initialize);
 
@@ -52,11 +66,11 @@ function App() {
             <DashboardLayout />
           </ProtectedRoute>
         }>
-          <Route index element={<Dashboard />} />
-          <Route path="dishes" element={<AllDishes />} />
-          <Route path="dishes/add" element={<AddDish />} />
-          <Route path="qr" element={<QrCode />} />
-          <Route path="settings" element={<Settings />} />
+          <Route index element={<SubscriptionGuard><Dashboard /></SubscriptionGuard>} />
+          <Route path="dishes" element={<SubscriptionGuard><AllDishes /></SubscriptionGuard>} />
+          <Route path="dishes/add" element={<SubscriptionGuard><AddDish /></SubscriptionGuard>} />
+          <Route path="qr" element={<SubscriptionGuard><QrCode /></SubscriptionGuard>} />
+          <Route path="settings" element={<SubscriptionGuard><Settings /></SubscriptionGuard>} />
           <Route path="pricing" element={<Pricing />} />
           <Route path="billing" element={<Billing />} />
         </Route>
