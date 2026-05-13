@@ -1,0 +1,60 @@
+=======================================================
+           AR SMART MENU - PROJECT OVERVIEW
+=======================================================
+
+1. WHAT IS THIS PROJECT?
+------------------------
+AR Smart Menu is a modern "SaaS" (Software as a Service) platform designed for restaurants. It replaces old paper menus with a smart, digital, and interactive experience. 
+
+Restaurant owners can manage their dishes, prices, and images from a beautiful dashboard. Customers simply scan a QR code on their table to see the menu on their phone, complete with Augmented Reality (AR) technology to see the food "virtually" on their table.
+
+2. KEY FEATURES
+---------------
+* Premium Dashboard: A high-end control panel for restaurant owners.
+* Real-Time Menu Management: Add, edit, or delete dishes instantly.
+* Smart Image Upload: Automatically shrinks large photos so they upload and load fast.
+* QR Code System: Automatically generates a unique QR code for each restaurant that can be downloaded and printed.
+* Customer Mobile Menu: A beautiful, app-like menu that works in any phone browser (no app download needed).
+* Augmented Reality (AR): Allows customers to "place" a 2D image of the food onto their physical table in 3D space using their phone's camera.
+* Secure Login: Uses military-grade security to keep restaurant data safe.
+
+3. HOW THE TECHNOLOGY WORKS (SIMPLE VERSION)
+--------------------------------------------
+* The Frontend (The Look): Built with React and TypeScript. This makes the website fast, smooth, and bug-free.
+* The Backend (The Brain): Built with Node.js and Express. It handles the logic of the application.
+* The Database (The Storage): We use "Supabase" (which runs on PostgreSQL). It stores all the dish names, prices, and user accounts.
+* Augmented Reality (AR): We use "WebXR" and "Three.js". This is the technology that lets the phone "see" the table and place the food image on it.
+* Styling: We use "Tailwind CSS" and "Framer Motion" to make the website look like a premium, expensive product.
+
+4. STEP-BY-STEP USER FLOW
+-------------------------
+A) FOR THE RESTAURANT OWNER:
+   1. Create an account (Signup).
+   2. Log in to the Dashboard.
+   3. Add a dish (Name, Price, Category, and a Photo).
+   4. Go to the "QR Code" page and download your unique QR code.
+   5. Print the QR code and put it on your tables.
+
+B) FOR THE CUSTOMER:
+   1. Walk into the restaurant and scan the QR code with a phone camera.
+   2. The phone opens the digital menu instantly.
+   3. Browse categories (Starters, Mains, etc.).
+   4. Click "View in AR" on a dish to see it on the table before ordering!
+
+5. WHY THIS IS "STARTUP READY"
+------------------------------
+* Secure: Every restaurant's data is private and locked.
+* Scalable: It can handle 10 dishes or 10,000 dishes without slowing down.
+* High Performance: Images are compressed automatically for speed.
+* Investor-Ready UI: The design is modern, dark, and uses "Glassmorphism" (looks like frosted glass), which is a top design trend today.
+
+6. HOW TO RUN THE PROJECT
+-------------------------
+1. Open the folder in a code editor (like VS Code).
+2. Start the Frontend: Go into the "frontend" folder and run "npm run dev".
+3. Start the Backend: Go into the "backend" folder and run "npm run dev".
+4. Open the website in your browser!
+
+=======================================================
+       END OF DOCUMENT - PREPARED BY ANTIGRAVITY
+=======================================================
