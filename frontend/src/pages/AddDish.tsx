@@ -24,6 +24,7 @@ export default function AddDish() {
     price: '',
     category: 'Mains',
     description: '',
+    is_bestseller: false,
   });
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -40,8 +41,8 @@ export default function AddDish() {
     try {
       // Compress the image significantly to reduce upload time
       const options = {
-        maxSizeMB: 0.5, // 500KB limit
-        maxWidthOrHeight: 1200,
+        maxSizeMB: 0.05, // 50KB limit for aggressive thumbnail compression
+        maxWidthOrHeight: 800,
         useWebWorker: true,
       };
       
@@ -166,18 +167,36 @@ export default function AddDish() {
               />
             </div>
 
-            <div className="space-y-1">
-              <label className="block text-sm font-medium text-gray-300">Category</label>
-              <select 
-                className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm text-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent appearance-none"
-                value={formData.category}
-                onChange={e => setFormData({ ...formData, category: e.target.value })}
-              >
-                <option value="Starters">Starters</option>
-                <option value="Mains">Mains</option>
-                <option value="Desserts">Desserts</option>
-                <option value="Drinks">Drinks</option>
-              </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-gray-300">Category</label>
+                <select 
+                  className="flex h-11 w-full rounded-lg border border-border bg-background/50 px-3 py-2 text-sm text-gray-100 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:border-transparent appearance-none"
+                  value={formData.category}
+                  onChange={e => setFormData({ ...formData, category: e.target.value })}
+                >
+                  <option value="Starters">Starters</option>
+                  <option value="Mains">Mains</option>
+                  <option value="Desserts">Desserts</option>
+                  <option value="Drinks">Drinks</option>
+                </select>
+              </div>
+
+              <div className="space-y-1">
+                <label className="block text-sm font-medium text-gray-300">Famous Pick / Bestseller</label>
+                <div className="flex h-11 items-center px-2">
+                  <label className="relative inline-flex items-center cursor-pointer">
+                    <input 
+                      type="checkbox" 
+                      className="sr-only peer"
+                      checked={formData.is_bestseller}
+                      onChange={e => setFormData({ ...formData, is_bestseller: e.target.checked })}
+                    />
+                    <div className="w-11 h-6 bg-surface peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-gray-400 peer-checked:after:bg-black after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary border border-border"></div>
+                    <span className="ml-3 text-sm font-medium text-gray-400">Mark as highly recommended</span>
+                  </label>
+                </div>
+              </div>
             </div>
 
             <div className="space-y-1">

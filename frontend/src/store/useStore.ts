@@ -10,6 +10,7 @@ export interface Dish {
   category: string;
   imageUrl?: string;
   arModelUrl?: string;
+  is_bestseller?: boolean;
 }
 
 export interface User {
@@ -208,7 +209,8 @@ export const useStore = create<AppState>((set, get) => ({
       description: d.description,
       category: d.category,
       imageUrl: d.image_url,
-      arModelUrl: d.ar_model_url
+      arModelUrl: d.ar_model_url,
+      is_bestseller: d.is_bestseller
     }));
     
     set({ dishes: formattedDishes });
@@ -227,7 +229,8 @@ export const useStore = create<AppState>((set, get) => ({
         price: dishData.price,
         description: dishData.description,
         category: dishData.category,
-        image_url: dishData.imageUrl
+        image_url: dishData.imageUrl,
+        is_bestseller: dishData.is_bestseller
       })
       .select()
       .single();
@@ -246,7 +249,8 @@ export const useStore = create<AppState>((set, get) => ({
         description: data.description,
         category: data.category,
         imageUrl: data.image_url,
-        arModelUrl: data.ar_model_url
+        arModelUrl: data.ar_model_url,
+        is_bestseller: data.is_bestseller
       };
       
       set((state) => ({ 

@@ -13,7 +13,7 @@ export default function CustomerMenu() {
   const [dishes, setDishes] = useState<Dish[]>([]);
   const [restaurantName, setRestaurantName] = useState('...');
   const [isLoading, setIsLoading] = useState(true);
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState('Famous Picks');
   const [selectedDish, setSelectedDish] = useState<string | null>(null);
   const [arDish, setArDish] = useState<Dish | null>(null);
   const [isEnterprise, setIsEnterprise] = useState(false);
@@ -47,7 +47,10 @@ export default function CustomerMenu() {
           
           const periodEnd = new Date(sub.current_period_end);
           const gracePeriodEnd = new Date(periodEnd.getTime() + (2 * 24 * 60 * 60 * 1000));
-          const now = new Date();
+          
+          // Secure server time check to prevent client clock manipulation
+          const { data: serverTime } = await supabase.rpc('get_server_time');
+          const now = serverTime ? new Date(serverTime) : new Date();
           
           // If status is not active and grace period has passed
           const hasExpired = sub.status === 'expired' || (sub.status !== 'active' && sub.status !== 'trialing' && now > gracePeriodEnd);
@@ -70,7 +73,8 @@ export default function CustomerMenu() {
             description: d.description,
             category: d.category,
             imageUrl: d.image_url,
-            arModelUrl: d.ar_model_url
+            arModelUrl: d.ar_model_url,
+            is_bestseller: d.is_bestseller
           })));
         }
       } catch (error) {
@@ -83,11 +87,22 @@ export default function CustomerMenu() {
     loadMenu();
   }, [restaurantId]);
 
-  const categories = ['All', 'Starters', 'Mains', 'Desserts', 'Drinks'];
+  const categories = ['Famous Picks', 'All', 'Starters', 'Mains', 'Desserts', 'Drinks'];
 
-  const filteredDishes = dishes.filter(dish => 
-    activeCategory === 'All' || dish.category === activeCategory
-  );
+  const handleARClick = (dish: Dish) => {
+    // Check for WebXR compatibility
+    if ('xr' in navigator) {
+      setArDish(dish);
+    } else {
+      alert("Your device or browser does not support Augmented Reality (WebXR). Please try using a compatible browser like Chrome on Android.");
+    }
+  };
+
+  const filteredDishes = dishes.filter(dish => {
+    if (activeCategory === 'Famous Picks') return dish.is_bestseller;
+    if (activeCategory === 'All') return true;
+    return dish.category === activeCategory;
+  });
 
   if (isLoading) {
     return (
@@ -160,6 +175,7 @@ export default function CustomerMenu() {
                     src={dish.imageUrl} 
                     alt={dish.name} 
                     className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent" />
                   
@@ -194,7 +210,7 @@ export default function CustomerMenu() {
                         
                         {isEnterprise ? (
                           <button 
-                            onClick={() => setArDish(dish)}
+                            onClick={() => handleARClick(dish)}
                             className="w-full bg-surface border border-primary/30 hover:bg-primary/10 text-primary py-3 rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
                           >
                             <Box className="w-5 h-5" />

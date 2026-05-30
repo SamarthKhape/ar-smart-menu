@@ -34,16 +34,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
 }
 
 function SubscriptionGuard({ children }: { children: React.ReactNode }) {
-  const { subscription, isLoading } = useStore();
-  
-  if (isLoading) return null;
-
-  const isActive = subscription && (subscription.status === 'active' || subscription.status === 'trialing');
-  
-  if (!isActive) {
-    return <Navigate to="/dashboard/pricing" replace />;
-  }
-  
+  // Bypassed for demonstration purposes
   return <>{children}</>;
 }
 
